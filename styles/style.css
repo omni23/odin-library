@@ -6,10 +6,8 @@
 }
 
 :root {
-    --header-color: rgb(5, 1, 74);
-    --body-bg: rgb(230, 230, 230);
-    --paragraph-color: rgb(50, 50, 50);
-    --button-color: rgb(33, 150, 243);
+    --paragraph-color: rgb(70, 70, 70);
+    --button-color: rgb(255, 165, 0);
     --shadow-color: rgb(150, 150, 150);
     font-family: sans-serif;
 }
@@ -18,14 +16,17 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    background-color: var(--body-bg);
+    background-color: white;
 }
 
 header {
     padding: 20px;
     box-shadow: 0 3px 5px var(--shadow-color);
-    background-color: var(--header-color);
+    background-color: white;
+}
+
+img {
+    width: 50px;
 }
 
 #logo {
@@ -35,14 +36,10 @@ header {
     font-family: "PT Sans";
     font-size: 2rem;
     font-weight: 800;
-    color: white;
-}
-
-#logo > img {
-    width: 50px;
 }
 
 main {
+    padding: 40px 20px;
     flex: 1;
 }
 
@@ -76,4 +73,18 @@ main {
     color: white;
     box-shadow: 2px 2px 3px var(--shadow-color);
     background-color: var(--button-color);
+}
+
+footer {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+footer > a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: black;
 }
