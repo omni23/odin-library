@@ -6,8 +6,8 @@
 }
 
 :root {
-    --header-color: #856047;
-    --body-bg: #faf1dd;
+    --header-color: rgb(5, 1, 74);
+    --body-bg: rgb(230, 230, 230);
     font-family: "PT Sans", sans-serif;
 }
 
@@ -20,7 +20,7 @@ body {
 
 header {
     padding: 20px;
-    box-shadow: 0 2px 5px black;
+    box-shadow: 0 3px 5px rgb(150, 150, 150);
     background-color: var(--header-color);
 }
 
