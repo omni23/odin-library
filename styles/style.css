@@ -7,22 +7,36 @@
 
 :root {
     --header-color: #856047;
-    --main-color: #faf1dd;
-    --bg-color: #fffbf2;
+    --body-bg: #faf1dd;
+    font-family: "PT Sans", sans-serif;
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-color);
+    background-color: var(--body-bg);
 }
 
 header {
+    padding: 20px;
+    box-shadow: 0 2px 5px black;
     background-color: var(--header-color);
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+}
+
+#logo > img {
+    width: 50px;
 }
 
 main {
     flex: 1;
-    background-color: var(--main-color);
 }
