@@ -5,12 +5,24 @@
     background: none;
 }
 
+:root {
+    --header-color: #856047;
+    --main-color: #faf1dd;
+    --bg-color: #fffbf2;
+}
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--bg-color);
+}
+
+header {
+    background-color: var(--header-color);
 }
 
 main {
     flex: 1;
+    background-color: var(--main-color);
 }
