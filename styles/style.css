@@ -107,6 +107,10 @@ input {
     background-color: var(--banner-color);
 }
 
+input:focus {
+    box-shadow: 0 2px 3px var(--shadow-color); 
+}
+
 input:focus:invalid {
     border: 1px solid red;
 }
@@ -173,6 +177,10 @@ span {
     padding: 10px 40px;
     border: 2px solid var(--accent-color);
     color: var(--heading-color);
+}
+
+#banner-content > div > button:hover {
+    box-shadow: 0 2px 3px var(--shadow-color);
 }
 
 #plus-span {
