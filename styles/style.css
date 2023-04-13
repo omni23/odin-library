@@ -125,3 +125,18 @@ footer > a {
     text-decoration: none;
     color: black;
 }
+
+@media only screen and (max-width: 520px) {
+    #banner-content {
+        width: fit-content;
+        grid-template-columns: 1fr;
+    }
+
+    #banner-content > h1 {
+        grid-row: 1 / 2;
+    }
+
+    #banner-content > div {
+        grid-row: 2 / 3;
+    }
+}
