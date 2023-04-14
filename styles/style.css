@@ -26,7 +26,8 @@ body {
 
 .darken {
     z-index: 1;
-    position: absolute;
+    position: fixed;
+    height: 100vh;
     top: 0;
     right: 0;
     bottom: 0;
@@ -180,25 +181,49 @@ span {
 }
 
 #banner-content > div > button:hover {
-    box-shadow: 0 2px 3px var(--shadow-color);
+    transform: scale(1.1);
 }
 
-#plus-span {
-    font-size: 2rem;
+h2 {
+    margin-bottom: 20px;
 }
 
-table {
-    width: 80%;
-    margin: 20px auto 20px auto;
-    border-collapse: collapse;
+#book-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 350px);
+    grid-auto-rows: 250px;
+    gap: 30px;
 }
 
-tr {
-    border-bottom: 1px solid var(--heading-color);
+.card {
+    padding: 20px;
+    color: white;
+    background-color: rgb(255, 173, 21);
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgb(80, 80, 80);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-th, td {
-    padding-bottom: 10px;
+.card > h3 {
+    font-size: 1.5rem;
+}
+
+.card > p {
+    font-size: 1.25rem;
+}
+
+.card > div {
+    margin: auto 0 0 auto;
+    display: flex;
+    gap: 10px;
+}
+
+.card img {
+    cursor: pointer;
+    width: 30px;
 }
 
 footer {
@@ -228,5 +253,9 @@ footer > a {
 
     #banner-content > div {
         grid-row: 2 / 3;
+    }
+
+    #book-container {
+        grid-template-columns: 1fr;
     }
 }
