@@ -190,8 +190,8 @@ h2 {
 
 #book-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 350px);
-    grid-auto-rows: 250px;
+    grid-template-columns: repeat(auto-fit, 450px);
+    grid-auto-rows: 200px;
     gap: 30px;
 }
 
@@ -208,11 +208,11 @@ h2 {
 }
 
 .card > h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 .card > p {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
 }
 
 .card > div {
@@ -223,7 +223,7 @@ h2 {
 
 .card img {
     cursor: pointer;
-    width: 30px;
+    width: 25px;
 }
 
 footer {
@@ -240,7 +240,7 @@ footer > a {
     color: black;
 }
 
-@media only screen and (max-width: 520px) {
+@media only screen and (max-width: 550px) {
     #banner-content {
         width: fit-content;
         grid-template-columns: 1fr;
