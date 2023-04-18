@@ -1,122 +1,144 @@
-const openFormButton = document.querySelector("#open-form");
-const closeFormButton = document.querySelector("#close-form");
-const addBookButton = document.querySelector("#add-book");
-const bookForm = document.querySelector("form");
-const bookContainer = document.querySelector("#book-container");
-const darkenDiv = document.querySelector("#darken-div");
-const inputList = document.querySelectorAll("input");
-const myLibrary = [];
+// DOM elements
 
-function Book(name, author, pages, read) {
-  this.name = name;
+const openButton = document.querySelector("#open-form");
+const closeButton = document.querySelector("#close-form");
+const addBookButton = document.querySelector("#add-book");
+const bookContainer = document.querySelector("#book-container");
+const inputList = document.querySelectorAll("input");
+
+// Variables
+
+const myLibrary = [];
+const deleteIcon = "./assets/images/delete.svg";
+const readIcon = "./assets/images/check.svg";
+const unreadIcon = "./assets/images/book-open.svg";
+
+// Book constructor and functions
+
+function Book(title, author, pages, read) {
+  this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
 }
 
-function createBook(userList) {
-  /* use values from form */
-  return new Book(
-    userList[0].value,
-    userList[1].value,
-    userList[2].value,
-    userList[3].checked
-  );
+function addBookToLibrary(title, author, pages, read, library) {
+  const newBook = new Book(title, author, pages, read);
+  library.push(newBook);
+
+  return newBook;
 }
 
-function updateBookStatus(book) {
-  if (book.read) {
-    book.read = false;
-  } else {
-    book.read = true;
-  }
+Book.prototype.updateBookStatus = function () {
+  this.read = !this.read;
+};
+
+// UI functions
+
+function createCard(title, author, pages, status, iconOne, iconTwo) {
+  const card = document.createElement("div");
+
+  const cardTitle = document.createElement("h3");
+  cardTitle.textContent = title;
+
+  const cardAuthor = document.createElement("p");
+  cardAuthor.textContent = author;
+
+  const cardPages = document.createElement("p");
+  cardPages.textContent = pages;
+
+  const cardRead = document.createElement("p");
+  cardRead.textContent = status;
+
+  const buttonContainer = document.createElement("div");
+
+  const imgOne = document.createElement("img");
+  imgOne.src = iconOne;
+
+  const imgTwo = document.createElement("img");
+  imgTwo.src = iconTwo;
+
+  buttonContainer.append(imgOne, imgTwo);
+
+  card.append(cardTitle, cardAuthor, cardPages, cardRead, buttonContainer);
+
+  return card;
 }
 
-function deleteBook(userArray, index) {
-  userArray.splice(index, 1);
-}
-
-Book.prototype.updateBookStatus = updateBookStatus;
-
-/* functions to handle UI */
-
-function updateCardStatus(book, status, icon) {
-  if (book.read) {
-    status.textContent = "Read";
-    icon.src = "./assets/images/check.svg";
-  } else {
-    status.textContent = "Unread";
-    icon.src = "./assets/images/book-open.svg";
-  }
-}
-
-function deleteCard(container, card, index) {
+function deleteCard(container, card) {
+  const index = card.dataset.indexNumber;
   card.remove();
 
-  /* shift indices down one for proceeding book
-    cards */
-  for (let i = index; i < container.children.length; i++) {
-    container.children[i].dataset.indexNumber -= 1;
+  for (let i = index; i < container.children.length; i += 1) {
+    const child = container.children[i];
+    child.dataset.indexNumber -= 1;
   }
 }
 
-function createCard(book) {
-  const bookCard = document.createElement("div");
-  bookCard.classList.add("card");
-  bookCard.dataset.indexNumber = myLibrary.length;
+// Event Listeners
 
-  const bookName = document.createElement("h3");
-  bookName.textContent = book.name;
+openButton.addEventListener("click", () => {
+  document.querySelector("#darken-div").classList.add("darken");
+  document.querySelector("form").style.display = "flex";
+});
 
-  const bookAuthor = document.createElement("p");
-  bookAuthor.textContent = book.author;
+closeButton.addEventListener("click", () => {
+  document.querySelector("#darken-div").classList.remove("darken");
+  document.querySelector("form").style.display = "none";
+});
 
-  const bookPages = document.createElement("p");
-  bookPages.textContent = book.pages;
+addBookButton.addEventListener("click", (event) => {
+  event.preventDefault();
 
-  const bookStatus = document.createElement("p");
+  const newBook = addBookToLibrary(
+    inputList[0].value,
+    inputList[1].value,
+    inputList[2].value,
+    inputList[3].checked,
+    myLibrary
+  );
 
-  const iconContainer = document.createElement("div");
+  const card = newBook.read
+    ? createCard(
+        newBook.title,
+        newBook.author,
+        `${newBook.pages} pages`,
+        "Read",
+        readIcon,
+        deleteIcon
+      )
+    : createCard(
+        newBook.title,
+        newBook.author,
+        `${newBook.pages} pages`,
+        "Unread",
+        unreadIcon,
+        deleteIcon
+      );
 
-  const deleteIcon = document.createElement("img");
-  deleteIcon.src = "./assets/images/delete.svg";
+  card.dataset.indexNumber = myLibrary.indexOf(newBook).toString();
+  card.classList.add("card");
 
-  const readIcon = document.createElement("img");
-  updateCardStatus(book, bookStatus, readIcon);
+  card.lastChild.firstChild.addEventListener("click", (e) => {
+    if (myLibrary[card.dataset.indexNumber].read) {
+      card.children[3].textContent = "Unread";
+      e.target.src = unreadIcon;
+    } else {
+      card.children[3].textContent = "Read";
+      e.target.src = readIcon;
+    }
 
-  readIcon.addEventListener("click", () => {
-    updateBookStatus(book);
-    updateCardStatus(book, bookStatus, readIcon);
+    myLibrary[card.dataset.indexNumber].updateBookStatus();
   });
 
-  deleteIcon.addEventListener("click", () => {
-    deleteBook(myLibrary, bookCard.dataset.indexNumber);
-    deleteCard(bookContainer, bookCard, bookCard.dataset.indexNumber);
+  card.lastChild.lastChild.addEventListener("click", () => {
+    deleteCard(bookContainer, card);
+    myLibrary.splice(card.dataset.indexNumber, 1);
   });
 
-  iconContainer.append(readIcon, deleteIcon);
-  bookCard.append(bookName, bookAuthor, bookPages, bookStatus, iconContainer);
-  bookContainer.appendChild(bookCard);
-}
+  bookContainer.append(card);
 
-function openForm() {
-  bookForm.style.display = "flex";
-  darkenDiv.classList.add("darken");
-}
-
-function closeForm() {
-  bookForm.style.display = "none";
-  darkenDiv.classList.remove("darken");
-}
-
-openFormButton.addEventListener("click", openForm);
-
-closeFormButton.addEventListener("click", closeForm);
-
-addBookButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const newBook = createBook(inputList);
-  createCard(newBook);
-  myLibrary.push(newBook);
-  closeForm();
+  // close form
+  document.querySelector("#darken-div").classList.remove("darken");
+  document.querySelector("form").style.display = "none";
 });
